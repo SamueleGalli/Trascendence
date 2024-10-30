@@ -5,12 +5,17 @@ import { updateAIPaddle } from './IA.js';
 import { isdown, isup, isWon, setWon } from './state.js';
 import { updown } from './moving_paddle.js';
 
+
+/*
+    ia troppo veloce e non sbaglia mai
+    controllare problemi di collisione palla racchetta sinistra
+*/
 export function simulateGame()
 {
     // Inizializza la palla e le racchette
-    const ball = new Ball(window.innerWidth / 2 - 10, window.innerHeight / 2 - 10, 10, 5);
-    const rightPaddle = new Paddle(window.innerWidth - 10, window.innerHeight / 2 - 50, 15, 100, 'red', 10);
-    const leftPaddle = new Paddle(0, window.innerHeight / 2 - 50, 10, 100, 'blue', 15);
+    const ball = new Ball(window.innerWidth / 2 - 10, window.innerHeight / 2 - 10, 10, 7);
+    const rightPaddle = new Paddle(window.innerWidth - 10, window.innerHeight / 2 - 50, 10, 110, 'black', 5);
+    const leftPaddle = new Paddle(0, window.innerHeight / 2 - 50, 10, 110, 'black', 15);
     const timer = new Timer();
     const title = document.getElementById('gameTitle');
     const button = document.getElementById('aiButton');
@@ -44,8 +49,8 @@ export function simulateGame()
 
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Pulisce il canvas
                 
-        paddle_collision(leftPaddle, ball);
-        paddle_collision(rightPaddle, ball);
+        paddle_collision(leftPaddle, ball, canvas);
+        paddle_collision(rightPaddle, ball, canvas);
         move(ball);
         checkscore(ball, timer);
         

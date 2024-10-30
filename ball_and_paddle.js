@@ -44,20 +44,20 @@ export class Timer
     }
 }
 
-// Struttura per la racchetta (IA)
+// Struttura per la racchetta
 export class Paddle
 {
     constructor(x, y, width, height, color, speed)
     {
         this.x = x;
         this.y = y;
-        this.width = width;
+        this.width = width; // Larghezza del paddle
         this.height = height;
         this.speed = speed;
         
         // Crea l'elemento HTML per la racchetta
         this.element = document.createElement('div');
-        this.element.style.width = '10px';
+        this.element.style.width = this.width + 'px'; // Usa this.width per la larghezza
         this.element.style.height = this.height + 'px';
         this.element.style.backgroundColor = color;
         this.element.style.position = 'absolute';

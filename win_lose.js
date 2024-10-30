@@ -5,8 +5,17 @@ export function resetBall(ball)
 {
     ball.x = window.innerWidth / 2 - 10;
     ball.y = window.innerHeight / 2 - 10;
-    ball.speedX = (Math.random() > 0.5 ? 1 : -1) * 7;
-    ball.speedY = (Math.random() > 0.5 ? 1 : -1) * 7;
+
+    if (Math.random() > 0.5)
+        ball.speedX = 1 * 7;
+    else
+        ball.speedX = -1 * 7;
+    
+    if (Math.random() > 0.5)
+        ball.speedY = 1 * 7;
+    else
+        ball.speedY = -1 * 7;
+    
 }
 
 export function updateScoreBoard(timer)
