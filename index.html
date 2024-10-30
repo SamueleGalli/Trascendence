@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <!-- Definisce il documento come HTML5 e imposta la lingua italiana -->
+  <meta charset="UTF-8">
+  <!-- Assicura che il layout sia adattabile ai dispositivi mobili -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Titolo che appare nella scheda del browser -->
+  <title>PING PONG</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Stile CSS per formattare l'aspetto della pagina -->
+  <style>
+    /* Impostazioni generali per il corpo della pagina */
+    body
+    {
+      margin: 0; /* Rimuove il margine di default della pagina */
+      display: flex; /* Usa il layout flessibile per posizionare gli elementi */
+      flex-direction: column; /* Dispone gli elementi verticalmente */
+      align-items: center; /* Centra gli elementi orizzontalmente */
+      height: 100vh; /* L'altezza del corpo è uguale all'altezza della finestra */
+      background-color: #0be7d1; /* Colore di sfondo grigio chiaro */
+      font-family: Arial, sans-serif; /* Font di default per il testo */
+    }
+
+    /* Stile per l'elemento h1 (titolo) */
+    h1
+    {
+      text-align: center; /* Centra il testo del titolo */
+      margin: 0; /* Rimuove il margine di default */
+      font-size: 3rem; /* Imposta la dimensione del testo grande */
+      padding-top: 20px; /* Aggiunge un po' di spazio sopra il titolo */
+    }
+
+    /* Stile per il contenitore del pulsante */
+    .button-container
+    {
+      flex-grow: 1; /* Permette al contenitore di occupare spazio extra */
+      display: flex; /* Usa il layout flessibile per il pulsante */
+      justify-content: center; /* Centra il pulsante orizzontalmente */
+      align-items: center; /* Centra il pulsante verticalmente */
+      margin-bottom: 20px; /* Aggiunge un po' di spazio sotto il pulsante */
+    }
+
+    /* Stile per il pulsante */
+    button
+    {
+      padding: 10px 20px; /* Spazio interno del pulsante (10px verticali, 20px orizzontali) */
+      font-size: 1.5rem; /* Dimensione del testo del pulsante */
+      background-color: #4CAF50; /* Colore verde del pulsante */
+      color: white; /* Colore del testo bianco */
+      border: none; /* Rimuove il bordo di default */
+      border-radius: 5px; /* Arrotonda gli angoli del pulsante */
+      cursor: pointer; /* Cambia il cursore a "puntatore" quando si passa sopra il pulsante */
+      transition: background-color 0.3s ease; /* Transizione fluida per il cambio colore */
+    }
+
+    /* Stile quando il mouse passa sopra il pulsante */
+    button:hover
+    {
+      background-color: #45a049; /*Cambia il colore di sfondo a un verde più scuro*/
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="800" height="20"></canvas>
+  <script type="module" src="start_game.js"></script>
+  <h1 id="gameTitle">PONG</h1>
+  <div class="button-container">
+    <button id="aiButton">vs I.A.</button>
+  </div>
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const aiButton = document.getElementById('aiButton');
+      aiButton.addEventListener('click', () => {
+        import('./start_game.js').then(module => {
+          module.simulateGame(); // Avvia il gioco solo quando premi il pulsante
+        });
+      });
+    });
+  </script>
+</body>
+</html>
