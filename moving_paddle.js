@@ -1,32 +1,27 @@
 import { isWon, setdown, setup } from "./state.js";
 // Funzione per muovere la racchetta sinistra
-export function move_player(leftPaddle, event)
-{
-    if (isWon())
-        return;
-    switch (event.key)
-    {
-        case 'w': // Tasto W per muovere su
-            leftPaddle.move('up');
-            break;
-        case 's': // Tasto S per muovere giù
-            leftPaddle.move('down');
-            break;
-    }
-}
-
 export function updown()
 {
+    // Aggiunge un listener per l'evento 'keydown'
     document.addEventListener('keydown', (event) => {
+        // Verifica se il tasto premuto è 'w'
         if (event.key === 'w')
-            setup(true) // Tasto W premuto
+            setup(true)
+        // Chiama la funzione setup se 'w' e stato premuto
+        // Verifica se il tasto premuto è 's'
         else if (event.key === 's')
-            setdown(true); // Tasto S premuto
+            setdown(true); 
+        // Chiama la funzione setup se 's' e stato premuto
     });
+     // Aggiunge un listener per l'evento 'keyup'
     document.addEventListener('keyup', (event) => {
+        // Verifica se il tasto rilasciato è 'w'
         if (event.key === 'w')
-            setup(false); // Tasto W rilasciato
+            setup(false);
+        // Chiama la funzione setup se 'w' e stato rilasciato
+        // Verifica se il tasto rilasciato è 's'
         else if (event.key === 's')
-            setdown(false); // Tasto S rilasciato
+            setdown(false); 
+        // Chiama la funzione setup se 's' e stato rilasciato
     });
 }

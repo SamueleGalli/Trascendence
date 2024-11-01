@@ -1,3 +1,4 @@
+//importo funzioni da altri file
 import { Ball, Paddle, Timer } from './ball_and_paddle.js';
 import { checkscore, updateScoreBoard } from './win_lose.js';
 import { move, paddle_collision } from './collision.js';
@@ -5,53 +6,45 @@ import { updateAIPaddle } from './IA.js';
 import { isdown, isup, isWon, setWon } from './state.js';
 import { updown } from './moving_paddle.js';
 
-
-/*
-    ia troppo veloce e non sbaglia mai
-    controllare problemi di collisione palla racchetta sinistra
-*/
 export function simulateGame()
 {
     // Inizializza la palla e le racchette
-    const ball = new Ball(window.innerWidth / 2 - 10, window.innerHeight / 2 - 10, 10, 7);
-    const rightPaddle = new Paddle(window.innerWidth - 10, window.innerHeight / 2 - 50, 10, 110, 'black', 5);
-    const leftPaddle = new Paddle(0, window.innerHeight / 2 - 50, 10, 110, 'black', 15);
+    //inizzializzo la palla con (x, y, raggio e la sua velocità)
+    const ball = new Ball(window.innerWidth / 2 - 10, window.innerHeight / 2 - 10, 10, 5);
+    //le racchette inizializzate con (x, y, larghezza, altezza, colore, velocità)
+    const rightPaddle = new Paddle(window.innerWidth - 10, window.innerHeight / 2 - 50, 10, 110, 'white', 5);
+    const leftPaddle = new Paddle(0, window.innerHeight / 2 - 50, 10, 110, 'white', 7);
     const timer = new Timer();
+
+    // Inizializza il titolo e il pulsante e riquadro di gioco
     const title = document.getElementById('gameTitle');
     const button = document.getElementById('aiButton');
-    const canvas = document.getElementById('gameCanvas'); // Assicurati di avere un canvas nel tuo HTML
-    const ctx = canvas.getContext('2d');
-    
+    const canvas = document.getElementById('gameCanvas');
     setWon(false); // Inizializza 'won' a false
     
     // Rimuovi il titolo e il pulsante
     if (title)
         title.remove(); // Rimuove il titolo se esiste
-    
     if (button)
         button.remove(); // Rimuove il pulsante se esiste
     
     updateScoreBoard(timer); // Imposta tabellone punti
-    
-    // Funzione principale del ciclo di gioco
+    //definisco movimenti su e giu
     updown();
     
-    function drawPaddle(paddle)
-    {
-        ctx.fillStyle = paddle.color;
-        ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
-    }
-
+    // Funzione principale del ciclo di gioco
     function gameLoop()
     {
+        //collisione racchette
+        paddle_collision(leftPaddle, ball, canvas);
+        paddle_collision(rightPaddle, ball, canvas);
+        //se la partita e finita torni al menu
         if (isWon())
             return;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Pulisce il canvas
-                
-        paddle_collision(leftPaddle, ball, canvas);
-        paddle_collision(rightPaddle, ball, canvas);
+        //gestisce movimenti palla
         move(ball);
+        //decide a chi dare punto
         checkscore(ball, timer);
         
         // Muovi la racchetta sinistra
@@ -59,8 +52,9 @@ export function simulateGame()
             leftPaddle.move('up');
         else if (isdown())
             leftPaddle.move('down');
-        updateAIPaddle(rightPaddle, ball);
-        drawPaddle(rightPaddle);
+        //se la palla supera la parte sinistra dello schermo intercetta la palla
+        if (ball.x > window.innerWidth / 2)
+            updateAIPaddle(rightPaddle, ball);
         // Richiama gameLoop al prossimo frame
         requestAnimationFrame(gameLoop);
     }

@@ -16,20 +16,20 @@ export function isWon()
 export function setup(value)
 {
 
-    moveUp = value;
+    moveUp = value;  // Modifica il valore di 'moveUp'
 }
 
 
 export function setdown(value)
 {
-    moveDown = value;
+    moveDown = value; // Modifica il valore di 'moveDown'
 }
 
 export function isup()
 {
-    return moveUp;
+    return moveUp; // Restituisce il valore attuale di 'moveUp'
 }
 export function isdown()
 {
-    return moveDown;
+    return moveDown; // Restituisce il valore attuale di 'moveDown'
 }

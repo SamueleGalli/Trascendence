@@ -10,31 +10,29 @@ function predictBallY(ball)
         // Prevedi la posizione Y della palla in quel momento
         let futureBallY = ball.y + ball.speedy * timeToReachAI;
         
-        // Se la palla supera i bordi dello schermo, calcola il rimbalzo
-        // Limitiamo il numero di rimbalzi per evitare loop infiniti
-        const maxBounces = 10;
-        let bounces = 0;
+        // Inizializza variabili per calcolare eventuali rimbalzi della palla
+        const maxBounces = 10; // Limite massimo di rimbalzi da calcolare per evitare loop infiniti
+        let bounces = 0; // Contatore per il numero di rimbalzi
 
-        // Se la palla supera i bordi dello schermo, calcola il rimbalzo
+        // Calcola il rimbalzo se la palla supera i bordi dello schermo
         while ((futureBallY < 0 || futureBallY > window.innerHeight) && bounces < maxBounces)
         {
-            bounces++;
+            bounces++; // Incrementa il contatore dei rimbalzi
             if (futureBallY < 0)
             {
-                // La palla rimbalza dal bordo superiore
-                futureBallY = -futureBallY; // Rimbalzo
+                // La palla ha colpito il bordo superiore
+                futureBallY = -futureBallY; // Calcola la nuova posizione Y dopo il rimbalzo
             }
             else if (futureBallY > window.innerHeight)
             {
-                // La palla rimbalza dal bordo inferiore
-                futureBallY = 2 * window.innerHeight - futureBallY; // Rimbalzo
+            // La palla ha colpito il bordo inferiore
+            futureBallY = 2 * window.innerHeight - futureBallY; // Calcola la nuova posizione Y dopo il rimbalzo
             }
         }
-        
-        return futureBallY;
+    // Restituisci la posizione Y prevista della palla dopo aver considerato i rimbalzi
+    return futureBallY;
     }
-    
-    // Altrimenti, restituisci la posizione attuale della palla
+    // Se la palla non si sta muovendo verso la racchetta dell'IA, restituisci la posizione Y attuale
     return ball.y;
 }
 
@@ -42,11 +40,17 @@ function predictBallY(ball)
 export function updateAIPaddle(ai, ball) 
 {
     let targetY = predictBallY(ball); // Previsione posizione palla
-    let distance = targetY - (ai.y + ai.height / 2);  // Distanza tra la posizione della palla prevista e il centro della racchetta
+    // Distanza tra la posizione della palla prevista e il centro della racchetta
+    let distance = targetY - (ai.y + ai.height / 2);
     let direction = Math.sign(distance);  // Decidi la direzione del movimento usando Math.sign
-    
+
+    // Usa una velocità basata su un fattore fisso
+     let aiSpeed = ai.speed * 0.001;  // Riduce la velocità dell'AI in base al fattore
     // Muovi la racchetta basandosi sulla velocità e sulla distanza
-    ai.y += direction * Math.min(ai.speed, Math.abs(distance));
+    if (Math.abs(distance) > aiSpeed)
+        ai.y += aiSpeed * direction;
+    else
+        ai.y += distance;
 
     // Limita il movimento della racchetta all'interno dello schermo
     if (ai.y < 0)

@@ -1,10 +1,9 @@
 export function move(ball)
 {
-    ball.x += ball.speedx;
-    ball.y += ball.speedy;
+    ball.x += ball.speedx; // Aggiorna la posizione orizzontale
+    ball.y += ball.speedy; // Aggiorna la posizione verticale
 
     // Controlla le collisioni con i bordi
-    
     if (ball.y <= 0)
     {
         ball.y = 0; // Limita la palla al bordo superiore
