@@ -1,3 +1,3 @@
-se faccio una sessione e la chiudo dovrei rientare
-se creo piu sessione essendo lo stesos utente dare errore
-e se non fai parte della 42 ti fa entrare come ospite
+puoi avere piu di un utente guest
+puoi avere solo un utente auteticato
+esci con un pulsante di logout e quando esci puoi riautenticarti
