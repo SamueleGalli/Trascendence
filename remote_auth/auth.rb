@@ -1,11 +1,8 @@
 require_relative 'config'
 require_relative 'session'
 require_relative 'guest'
-require "webrick"
+require 'webrick'
 require 'sinatra'
-
-enable :sessions
-
 
 # Avvia il server Sinatra in un thread separato
 Thread.new { Sinatra::Application.run! }
